@@ -1,0 +1,9 @@
+<div>
+    @for (m of messages; track $index) {
+        <p>{{m}}</p>
+    }
+</div>
+<form [formGroup]="formGroup">
+    <input type="text" formControlName="message">
+    <button (click)="sendMessage()">Send</button>
+</form>
