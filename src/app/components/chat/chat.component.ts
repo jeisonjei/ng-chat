@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
-const URL = `ws://95.182.120.168:8765`;
+const URL = `wss://95.182.120.168:8765`;
 // const URL = `ws://localhost:8765/`;
 
 
