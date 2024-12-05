@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { User } from '../../model/User';
 import { Router } from '@angular/router';
 import { MessageComponent } from '../message/message.component';
+import { MessageToServer } from '../../model/MessageToServer';
 
 const URL = `wss://95.182.120.168:8765`;
 // const URL = `ws://localhost:8765/`;
@@ -23,7 +24,7 @@ const URL = `wss://95.182.120.168:8765`;
 export class ChatComponent implements OnInit{
   
   ws!: WebSocket;
-  messages: string[] = [];
+  messages: MessageToServer[] = [];
   formGroup: FormGroup = new FormGroup({
     message: new FormControl(''),
   });
@@ -56,7 +57,15 @@ export class ChatComponent implements OnInit{
         var m = event.data;
         
         console.log('Received message:', event.data);
-        this.messages.push(m);
+        
+        var o:MessageToServer = JSON.parse(m) as MessageToServer;
+        
+        o.timestamp = (new Date(o.timestamp)).toLocaleString();
+
+        console.log(`** o.timestamp: ${o.timestamp}`);
+        
+        console.log('Parsed message:', o);
+        this.messages.push(o);
       };
       this.ws.onclose = () => {
         console.log('WebSocket connection closed');
@@ -77,11 +86,15 @@ export class ChatComponent implements OnInit{
 
     var value = this.formGroup.controls['message'].value;
 
-    console.group(`** sendMessage **`);
-    console.log('Message:', value);
-    console.groupEnd();
-    
-    this.ws.send(value);
+    this.timestamp = new Date();
+
+    var valueToServer = {
+      username: this.username,
+      message: value,
+      timestamp: this.timestamp.toISOString()
+    }
+
+    this.ws.send(JSON.stringify(valueToServer));
     this.formGroup.patchValue({ message: '' });
   }
 
