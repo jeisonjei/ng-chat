@@ -1,6 +1,6 @@
 <div>
     @for (m of messages; track $index) {
-        <p>{{m}}</p>
+        <app-message [message]="m" [username]="username" [timestamp]="timestamp.toLocaleString()"></app-message>
     }
 </div>
 <form [formGroup]="formGroup">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ChatComponent } from "./components/chat/chat.component";
 
@@ -13,5 +13,12 @@ import { ChatComponent } from "./components/chat/chat.component";
 })
 export class AppComponent{
   title = 'ng-chat';
+
+  @HostListener('window:onbeforeunload', ['$event'])
+  clearLocalStorage(event:Event) {
+    localStorage.clear();
+    return true; // Prevent default behavior
+  }
+  
 
 }

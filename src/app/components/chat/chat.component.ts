@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { User } from '../../model/User';
+import { Router } from '@angular/router';
+import { MessageComponent } from '../message/message.component';
 
 const URL = `wss://95.182.120.168:8765`;
 // const URL = `ws://localhost:8765/`;
@@ -9,36 +13,64 @@ const URL = `wss://95.182.120.168:8765`;
   selector: 'app-chat',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    MessageComponent
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
 })
 export class ChatComponent implements OnInit{
   
-  ws: WebSocket = new WebSocket(URL);
+  ws!: WebSocket;
   messages: string[] = [];
   formGroup: FormGroup = new FormGroup({
     message: new FormControl(''),
-  })
+  });
+
+  http = inject(HttpClient);
+  router = inject(Router);
+  user: (User | null) = null;
+  username: string = '';
+  timestamp = new Date();
 
   ngOnInit(): void {
-    this.ws.onopen = () => {
-      console.log('WebSocket connection established');
-    };
-    this.ws.onmessage = (event) => {
+    
 
-      var m = event.data;
+    var userJson = sessionStorage.getItem('user') ?? '{}';
+    this.user = JSON.parse(userJson);
+    this.username = this.user?.username ?? '';
+
+    if (this.username) {
+      this.ws = new WebSocket(URL);
+
+      console.group(`** ngOnInit **`);
+      console.log('User:', this.user);
+      console.groupEnd();
       
-      console.log('Received message:', event.data);
-      this.messages.push(m);
-    };
-    this.ws.onclose = () => {
-      console.log('WebSocket connection closed');
-    };
-    this.ws.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
+      this.ws.onopen = () => {
+        console.log('WebSocket connection established');
+      };
+      this.ws.onmessage = (event) => {
+  
+        var m = event.data;
+        
+        console.log('Received message:', event.data);
+        this.messages.push(m);
+      };
+      this.ws.onclose = () => {
+        console.log('WebSocket connection closed');
+      };
+      this.ws.onerror = (error) => {
+        console.error('WebSocket error:', error);
+      };
+    }
+    else {
+      console.log('No user found in session storage');
+      this.router.navigateByUrl('');
+    }
+
+
   }
 
   sendMessage(): void {

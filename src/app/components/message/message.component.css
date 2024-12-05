@@ -1,0 +1,22 @@
+.flex-col{
+    display: flex;
+    flex-direction: column;
+}
+.flex-row{
+    display: flex;
+    flex-direction: row;
+}
+.username{
+    font-size: .75em;
+    color: #888;
+}
+.timestamp{
+    font-size: .75em;
+    color: #888;
+}
+.mb-1{
+    margin-bottom:.5em;
+}
+.ml-1{
+    margin-left:.5em;
+}
