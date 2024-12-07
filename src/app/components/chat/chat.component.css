@@ -1,0 +1,33 @@
+.message {
+    position: absolute;
+    top: 95%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Additional styles */
+}
+.me1{
+    margin-right: 1em;
+}
+.flex-row{
+    display: flex;
+    flex-direction: row;
+    align-items: top;
+}
+.mt06{
+    margin-top: .6em;
+}
+.w30{
+    width: 30%;
+}
+.w40{
+    width: 40%;
+}
+.w50{
+    width: 50%;
+}
+.w75{
+    width: 75%;
+}
+.w100{
+    width: 100%;
+}

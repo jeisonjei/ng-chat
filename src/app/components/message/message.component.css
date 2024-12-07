@@ -6,6 +6,12 @@
     display: flex;
     flex-direction: row;
 }
+.left{
+    justify-content: start;
+}
+.right{
+    justify-content: end;
+}
 .username{
     font-size: .75em;
     color: #888;

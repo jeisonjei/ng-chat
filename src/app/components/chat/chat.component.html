@@ -3,7 +3,14 @@
         <app-message [message]="m.message" [username]="m.username" [timestamp]="m.timestamp"></app-message>
     }
 </div>
-<form [formGroup]="formGroup">
-    <input type="text" formControlName="message">
-    <button (click)="sendMessage()">Send</button>
-</form>
+<div class="message w30">
+    <form [formGroup]="formGroup" class="w100">
+        <div class="flex-row w100">
+            <mat-form-field class="me1 w100">
+                <mat-label>Сообщение</mat-label>
+                <input matInput type="text" formControlName="message">
+            </mat-form-field>
+            <button mat-flat-button color="primary" class="mt06" (click)="sendMessage()">Send</button>
+        </div>
+    </form>
+</div>

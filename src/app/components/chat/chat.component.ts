@@ -6,6 +6,14 @@ import { Router } from '@angular/router';
 import { MessageComponent } from '../message/message.component';
 import { MessageToServer } from '../../model/MessageToServer';
 
+// material
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+
+
+
 const URL = `wss://95.182.120.168:8765`;
 // const URL = `ws://localhost:8765/`;
 
@@ -16,7 +24,11 @@ const URL = `wss://95.182.120.168:8765`;
   imports: [
     ReactiveFormsModule,
     HttpClientModule,
-    MessageComponent
+    MessageComponent,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatCardModule
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
@@ -31,12 +43,12 @@ export class ChatComponent implements OnInit{
 
   http = inject(HttpClient);
   router = inject(Router);
+  
   user: (User | null) = null;
   username: string = '';
   timestamp = new Date();
 
   ngOnInit(): void {
-    
 
     var userJson = sessionStorage.getItem('user') ?? '{}';
     this.user = JSON.parse(userJson);

@@ -1,7 +1,30 @@
-<div class="flex-col mb-1">
-    <div>{{message()}}</div>
-    <div class="flex-row">
-        <div class="username">{{username()}}</div>
-        <div class="timestamp ml-1">{{timestamp()}}</div>
-    </div>
-</div>
+@if(authService.isAuthenticated(username())){
+<mat-card class="mb-1">
+    <mat-card-content>
+        <div class="flex-row right">
+            <div class="flex-col mb-1">
+                <div>{{message()}}</div>
+                <div class="flex-row">
+                    <div class="username">{{username()}}</div>
+                    <div class="timestamp ml-1">{{timestamp()}}</div>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+}
+@else {
+<mat-card class="mb-1">
+    <mat-card-content>
+        <div class="flex-row left">
+            <div class="flex-col mb-1">
+                <div>{{message()}}</div>
+                <div class="flex-row">
+                    <div class="username">{{username()}}</div>
+                    <div class="timestamp ml-1">{{timestamp()}}</div>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+}

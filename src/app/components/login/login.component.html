@@ -1,4 +1,9 @@
 <form action="" [formGroup]="loginForm">
-    <input type="text" formControlName="username">
-    <button (click)="onLogin()">Login</button>
+    <div class="flex-col">
+        <mat-form-field>
+            <mat-label>Укажите своё имя</mat-label>
+            <input matInput type="text" formControlName="username">
+        </mat-form-field>
+        <button mat-flat-button (click)="onLogin()">Login</button>
+    </div>
 </form>
